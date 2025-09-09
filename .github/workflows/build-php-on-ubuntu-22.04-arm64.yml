@@ -1,0 +1,131 @@
+name: "Build PHP on Ubuntu 22.04 arm64"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "PHP version to build"
+        required: true
+        type: choice
+        default: "8.4"
+        options:
+          - "8.4"
+          - "8.3"
+          - "8.2"
+          - "8.1"
+
+      extensions:
+        description: "Extensions to build (comma separated)"
+        required: true
+        type: string
+        default: "bcmath,bz2,calendar,ctype,curl,dom,ev,exif,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,session,shmop,simplexml,soap,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib,gd"
+
+      libs:
+        description: "Libraries to build (comma separated)"
+        required: true
+        type: string
+        default: "freetype,libjpeg,libavif,libwebp"
+
+      build-cli:
+        description: "Build a CLI SAPI"
+        type: boolean
+        default: true
+
+      build-micro:
+        description: "Build a Micro SAPI"
+        type: boolean
+        default: false
+
+      build-fpm:
+        description: "Build a FPM SAPI"
+        type: boolean
+        default: false
+
+      debug:
+        description: "Show full build logs"
+        type: boolean
+        default: false
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SPC_LIBC: glibc
+
+jobs:
+  build:
+    name: "Build PHP ${{ inputs.version }} on Ubuntu 22.04 arm64"
+    runs-on: ubuntu-22.04-arm
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Download the SPC binary"
+        run: curl -fsSL -o spc.tar.gz https://github.com/crazywhalecc/static-php-cli/releases/download/2.7.1/spc-linux-aarch64.tar.gz && tar -xf spc.tar.gz && chmod +x spc
+
+      - name: "Enable a CLI SAPI"
+        if: ${{ inputs.build-cli == true }}
+        run: echo "SPC_BUILD_CLI=--build-cli" >> $GITHUB_ENV
+
+      - name: "Enable a Micro SAPI"
+        if: ${{ inputs.build-micro == true }}
+        run: echo "SPC_BUILD_MICRO=--build-micro" >> $GITHUB_ENV
+
+      - name: "Enable a FPM SAPI"
+        if: ${{ inputs.build-fpm == true }}
+        run: echo "SPC_BUILD_FPM=--build-fpm" >> $GITHUB_ENV
+
+      - name: "Enable full build logs"
+        if: ${{ inputs.debug == true }}
+        run: echo "SPC_BUILD_DEBUG=--debug" >> $GITHUB_ENV
+
+      - name: "Run the \"doctor\" command"
+        run: ./spc doctor --auto-fix
+
+      - name: "Run the \"download\" command"
+        run: ./spc download --with-php="${{ inputs.version }}" --for-extensions="${{ inputs.extensions }}" --for-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_DEBUG }} --prefer-pre-built
+
+      - name: "Run the \"build\" command"
+        run: ./spc build "${{ inputs.extensions }}" --with-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_CLI }} ${{ env.SPC_BUILD_MICRO }} ${{ env.SPC_BUILD_FPM }} ${{ env.SPC_BUILD_DEBUG }}
+
+      - name: "Print information about version of PHP"
+        if: ${{ inputs.build-cli == true }}
+        run: ./buildroot/bin/php --version
+
+      - name: "Print information about modules of PHP"
+        if: ${{ inputs.build-cli == true }}
+        run: ./buildroot/bin/php -m
+
+      - name: "Upload a CLI SAPI"
+        uses: actions/upload-artifact@v4
+        if: ${{ inputs.build-cli == true }}
+        with:
+          name: cli-${{ inputs.version }}-ubuntu-22.04-arm64
+          path: ./buildroot/bin/php
+
+      - name: "Upload a Micro SAPI"
+        uses: actions/upload-artifact@v4
+        if: ${{ inputs.build-micro == true }}
+        with:
+          name: micro-${{ inputs.version }}-ubuntu-22.04-arm64
+          path: ./buildroot/bin/micro.sfx
+
+      - name: "Upload a FPM SAPI"
+        uses: actions/upload-artifact@v4
+        if: ${{ inputs.build-fpm == true }}
+        with:
+          name: fpm-${{ inputs.version }}-ubuntu-22.04-arm64
+          path: ./buildroot/bin/php-fpm
+
+      - name: "Upload the license files"
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-files-${{ inputs.version }}-ubuntu-22.04-arm64
+          path: ./buildroot/license/
+
+      - name: "Upload the metadata files"
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-metadata-${{ inputs.version }}-ubuntu-22.04-arm64
+          path: |
+            ./buildroot/build-extensions.json
+            ./buildroot/build-libraries.json
