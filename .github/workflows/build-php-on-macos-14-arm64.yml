@@ -7,8 +7,9 @@ on:
         description: "PHP version to build"
         required: true
         type: choice
-        default: "8.4"
+        default: "8.5"
         options:
+          - "8.5"
           - "8.4"
           - "8.3"
           - "8.2"
@@ -59,7 +60,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "Download the SPC binary"
-        run: curl -fsSL -o spc.tar.gz https://github.com/crazywhalecc/static-php-cli/releases/download/2.7.1/spc-macos-aarch64.tar.gz && tar -xf spc.tar.gz && chmod +x spc
+        run: curl -fsSL -o spc.tar.gz https://github.com/crazywhalecc/static-php-cli/releases/download/2.8.4/spc-macos-aarch64.tar.gz && tar -xf spc.tar.gz && chmod +x spc
 
       - name: "Enable a CLI SAPI"
         if: ${{ inputs.build-cli == true }}
