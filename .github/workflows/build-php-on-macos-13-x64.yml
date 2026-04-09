@@ -1,4 +1,4 @@
-name: "Build PHP on macOS 13 x64"
+name: "Build PHP on macOS 15 x64"
 
 on:
   workflow_dispatch:
@@ -53,7 +53,7 @@ env:
 jobs:
   build:
     name: "Build PHP ${{ inputs.version }} on macOS 13 x64"
-    runs-on: macos-13
+    runs-on: macos-15-intel
 
     steps:
       - name: "Checkout"
