@@ -52,7 +52,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: "Download the SPC binary"
         run: curl.exe -fsSL -o spc.exe https://github.com/crazywhalecc/static-php-cli/releases/download/2.8.4/spc-windows-x64.exe
@@ -87,27 +87,27 @@ jobs:
         run: .\buildroot\bin\php.exe -m
 
       - name: "Upload a CLI SAPI"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: ${{ inputs.build-cli == true }}
         with:
           name: cli-${{ inputs.version }}-windows-2022-x64
           path: .\buildroot\bin\php.exe
 
       - name: "Upload a Micro SAPI"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: ${{ inputs.build-micro == true }}
         with:
           name: micro-${{ inputs.version }}-windows-2022-x64
           path: .\buildroot\bin\micro.sfx
 
       - name: "Upload the license files"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: license-files-${{ inputs.version }}-windows-2022-x64
           path: .\buildroot\license\
 
       - name: "Upload the metadata files"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build-metadata-${{ inputs.version }}-windows-2022-x64
           path: |

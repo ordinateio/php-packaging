@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: "Download the SPC binary"
         run: curl -fsSL -o spc.tar.gz https://github.com/crazywhalecc/static-php-cli/releases/download/2.8.4/spc-macos-x86_64.tar.gz && tar -xf spc.tar.gz && chmod +x spc
@@ -96,34 +96,34 @@ jobs:
         run: ./buildroot/bin/php -m
 
       - name: "Upload a CLI SAPI"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: ${{ inputs.build-cli == true }}
         with:
           name: cli-${{ inputs.version }}-macos-13-x64
           path: ./buildroot/bin/php
 
       - name: "Upload a Micro SAPI"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: ${{ inputs.build-micro == true }}
         with:
           name: micro-${{ inputs.version }}-macos-13-x64
           path: ./buildroot/bin/micro.sfx
 
       - name: "Upload a FPM SAPI"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: ${{ inputs.build-fpm == true }}
         with:
           name: fpm-${{ inputs.version }}-macos-13-x64
           path: ./buildroot/bin/php-fpm
 
       - name: "Upload the license files"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: license-files-${{ inputs.version }}-macos-13-x64
           path: ./buildroot/license/
 
       - name: "Upload the metadata files"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build-metadata-${{ inputs.version }}-macos-13-x64
           path: |
