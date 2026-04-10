@@ -44,7 +44,6 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  ENVIRONMENT: windows-2022-x64
   SPC_VERSION: 2.8.4
 
 jobs:
@@ -56,28 +55,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v5
 
-      - name: "Cache the SPC binary"
-        id: cache-spc
-        uses: actions/cache@v5
-        with:
-          path: ./spc.exe
-          key: spc-${{ env.SPC_VERSION }}-${{ env.ENVIRONMENT }}
-
-      - name: "Generate hash key for the sources cache"
-        shell: bash
-        run: |
-          SOURCES_HASH=$(node -e "console.log(require('crypto').createHash('sha256').update('${{ inputs.version }}-${{ env.ENVIRONMENT }}-${{ inputs.extensions }}').digest('hex'))")
-          echo "SOURCES_HASH=${SOURCES_HASH}" >> "$GITHUB_ENV"
-
-      - name: "Cache the sources"
-        id: cache-sources
-        uses: actions/cache@v5
-        with:
-          path: ./downloads
-          key: sources-${{ inputs.version }}-${{ env.ENVIRONMENT }}-${{ env.SOURCES_HASH }}
-
       - name: "Download the SPC binary"
-        if: ${{ steps.cache-spc.outputs.cache-hit != true }}
         run: curl.exe -fsSL -o spc.exe https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-windows-x64.exe
 
       - name: "Enable a CLI SAPI"
@@ -96,7 +74,6 @@ jobs:
         run: .\spc.exe doctor --auto-fix
 
       - name: "Run the \"download\" command"
-        if: ${{ steps.cache-sources.outputs.cache-hit != true }}
         run: .\spc.exe download --with-php="${{ inputs.version }}" --for-extensions="${{ inputs.extensions }}" --for-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_DEBUG }} --prefer-pre-built
 
       - name: "Run the \"build\" command"
