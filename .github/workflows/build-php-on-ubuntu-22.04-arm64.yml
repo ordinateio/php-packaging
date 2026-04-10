@@ -49,6 +49,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SPC_VERSION: 2.8.4
   SPC_LIBC: glibc
 
 jobs:
@@ -61,7 +62,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: "Download the SPC binary"
-        run: curl -fsSL -o spc.tar.gz https://github.com/crazywhalecc/static-php-cli/releases/download/2.8.4/spc-linux-aarch64.tar.gz && tar -xf spc.tar.gz && chmod +x spc
+        run: curl -fsSL -o spc.tar.gz https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-linux-aarch64.tar.gz && tar -xf spc.tar.gz && chmod +x spc
 
       - name: "Enable a CLI SAPI"
         if: ${{ inputs.build-cli == true }}
