@@ -64,6 +64,7 @@ jobs:
           key: spc-${{ env.SPC_VERSION }}-${{ env.ENVIRONMENT }}
 
       - name: "Generate hash key for the sources cache"
+        shell: bash
         run: |
           SOURCES_HASH=$(node -e "console.log(require('crypto').createHash('sha256').update('${{ inputs.version }}-${{ env.ENVIRONMENT }}-${{ inputs.extensions }}').digest('hex'))")
           echo "SOURCES_HASH=${SOURCES_HASH}" >> "$GITHUB_ENV"
