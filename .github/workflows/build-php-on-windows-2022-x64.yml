@@ -44,6 +44,8 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SPC_BINARY: spc-windows-x64.exe
+  SPC_VERSION: 2.8.4
 
 jobs:
   build:
@@ -54,8 +56,16 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v5
 
+      - name: "Cache the SPC binary"
+        id: cache-spc
+        uses: actions/cache@v5
+        with:
+          path: ./${{ SPC_BINARY }}
+          key: spc-${{ env.SPC_VERSION }}-${{ runner.os }}
+
       - name: "Download the SPC binary"
-        run: curl.exe -fsSL -o spc.exe https://github.com/crazywhalecc/static-php-cli/releases/download/2.8.4/spc-windows-x64.exe
+        if: ${{ steps.cache-spc.outputs.cache-hit != true }}
+        run: curl.exe -fsSL -o spc.exe https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/${{ SPC_BINARY }}
 
       - name: "Enable a CLI SAPI"
         if: ${{ inputs.build-cli == true }}
