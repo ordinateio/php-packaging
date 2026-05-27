@@ -25,7 +25,7 @@ on:
         description: "Libraries to build (comma separated)"
         required: true
         type: string
-        default: "libjpeg,libavif,libwebp"
+        default: "freetype,libjpeg,libavif,libwebp"
 
       build-cli:
         description: "Build a CLI SAPI"
