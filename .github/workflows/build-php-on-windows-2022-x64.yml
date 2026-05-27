@@ -44,7 +44,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  SPC_VERSION: 2.7.1
+  SPC_VERSION: 2.7.8
 
 jobs:
   build:
