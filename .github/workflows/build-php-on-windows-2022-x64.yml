@@ -19,13 +19,13 @@ on:
         description: "Extensions to build (comma separated)"
         required: true
         type: string
-        default: "bcmath,bz2,ctype,curl,dom,ev,exif,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,shmop,simplexml,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib,gd"
+        default: "bcmath,bz2,calendar,ctype,curl,dom,ev,exif,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,session,shmop,simplexml,soap,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib,gd"
 
       libs:
         description: "Libraries to build (comma separated)"
         required: true
         type: string
-        default: "freetype,libjpeg,libwebp"
+        default: "freetype,libjpeg,libavif,libwebp"
 
       build-cli:
         description: "Build a CLI SAPI"
@@ -44,7 +44,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  SPC_VERSION: 2.8.3
+  SPC_VERSION: 2.8.4
 
 jobs:
   build:
