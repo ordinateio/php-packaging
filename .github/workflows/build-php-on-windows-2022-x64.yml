@@ -19,7 +19,7 @@ on:
         description: "Extensions to build (comma separated)"
         required: true
         type: string
-        default: "bcmath,bz2,calendar,ctype,curl,dom,ev,exif,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,session,shmop,simplexml,soap,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib,gd"
+        default: "bcmath,bz2,calendar,ctype,curl,dom,ev,exif,ffi,fileinfo,filter,gd,iconv,intl,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,readline,session,shmop,simplexml,soap,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib"
 
       libs:
         description: "Libraries to build (comma separated)"
@@ -55,7 +55,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v5
 
-      - name: "Download the SPC binary"
+      - name: "Download the SPC ${{ env.SPC_VERSION }}"
         run: curl.exe -fsSL -o spc.exe https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-windows-x64.exe
 
       - name: "Enable a CLI SAPI"
