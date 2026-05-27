@@ -55,7 +55,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v5
 
-      - name: "Download the SPC ${{ env.SPC_VERSION }}"
+      - name: "Download the SPC binary"
         run: curl.exe -fsSL -o spc.exe https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-windows-x64.exe
 
       - name: "Enable a CLI SAPI"
