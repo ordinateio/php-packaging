@@ -7,9 +7,9 @@ on:
         description: "PHP version to build"
         required: true
         type: choice
-        default: "8.5"
+        default: "8.5.5"
         options:
-          - "8.5"
+          - "8.5.5"
           - "8.4"
           - "8.3"
           - "8.2"
@@ -74,10 +74,10 @@ jobs:
         run: .\spc.exe doctor --auto-fix
 
       - name: "Run the \"download\" command"
-        run: .\spc.exe download --with-php="${{ inputs.version }}" --for-extensions="${{ inputs.extensions }}" --for-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_DEBUG }} --prefer-pre-built --retry=5
+        run: .\spc.exe download --with-php="${{ inputs.version }}" --for-extensions="${{ inputs.extensions }}" --for-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_DEBUG }} --prefer-pre-built
 
       - name: "Run the \"build\" command"
-        run: .\spc.exe build:php "${{ inputs.extensions }}" --with-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_CLI }} ${{ env.SPC_BUILD_MICRO }} ${{ env.SPC_BUILD_DEBUG }}
+        run: .\spc.exe build "${{ inputs.extensions }}" --with-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_CLI }} ${{ env.SPC_BUILD_MICRO }} ${{ env.SPC_BUILD_DEBUG }}
 
       - name: "Print information about version of PHP"
         if: ${{ inputs.build-cli == true }}
