@@ -54,7 +54,7 @@ on:
       debug:
         description: "Show full build logs"
         type: boolean
-        default: false
+        default: true
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
