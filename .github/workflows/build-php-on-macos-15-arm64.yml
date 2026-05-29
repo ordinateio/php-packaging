@@ -7,25 +7,25 @@ on:
         description: "PHP version to build"
         required: true
         type: choice
-        default: "8.5"
+        default: "8.5.5"
         options:
-          - "8.5"
-          - "8.4"
-          - "8.3"
-          - "8.2"
-          - "8.1"
+          - "8.5.5"
+          - "8.4.20"
+          - "8.3.30"
+          - "8.2.30"
+          - "8.1.34"
 
       extensions:
         description: "Extensions to build (comma separated)"
         required: true
         type: string
-        default: "bcmath,bz2,calendar,ctype,curl,dom,ev,exif,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,session,shmop,simplexml,soap,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib,gd"
+        default: "bcmath,bz2,ctype,curl,dom,ev,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,session,shmop,simplexml,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib,gd"
 
       libs:
         description: "Libraries to build (comma separated)"
-        required: true
+        required: false
         type: string
-        default: "freetype,libjpeg,libavif,libwebp"
+        default: "freetype,libjpeg,libwebp"
 
       build-cli:
         description: "Build a CLI SAPI"
@@ -35,7 +35,7 @@ on:
       build-micro:
         description: "Build a Micro SAPI"
         type: boolean
-        default: false
+        default: true
 
       build-fpm:
         description: "Build a FPM SAPI"
@@ -45,11 +45,11 @@ on:
       debug:
         description: "Show full build logs"
         type: boolean
-        default: false
+        default: true
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  SPC_VERSION: 2.8.4
+  SPC_VERSION: 2.8.5
 
 jobs:
   build:
