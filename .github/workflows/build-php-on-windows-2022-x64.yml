@@ -49,7 +49,7 @@ on:
       build-micro:
         description: "Build a Micro SAPI"
         type: boolean
-        default: false
+        default: true
 
       debug:
         description: "Show full build logs"
@@ -58,7 +58,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  SPC_VERSION: 2.7.1
+  SPC_VERSION: 2.7.11
 
 jobs:
   build:
