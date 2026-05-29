@@ -45,7 +45,6 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SPC_VERSION: 2.8.5
-  SPC_DOWNLOAD_RETRIES: 5
 
 jobs:
   build:
