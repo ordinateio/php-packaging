@@ -33,13 +33,13 @@ on:
         description: "Extensions to build (comma separated)"
         required: true
         type: string
-        default: "bcmath,bz2,ctype,curl,dom,ev,exif,ffi,fileinfo,filter,gd,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,session,shmop,simplexml,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib"
+        default: "bcmath,bz2,ctype,curl,dom,ev,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,session,shmop,simplexml,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib"
 
       libs:
         description: "Libraries to build (comma separated)"
         required: true
         type: string
-        default: "freetype,libjpeg,libwebp"
+        default: ""
 
       build-cli:
         description: "Build a CLI SAPI"
