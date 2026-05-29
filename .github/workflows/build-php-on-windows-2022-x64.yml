@@ -37,7 +37,7 @@ on:
 
       libs:
         description: "Libraries to build (comma separated)"
-        required: true
+        required: false
         type: string
         default: ""
 
