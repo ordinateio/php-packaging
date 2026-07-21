@@ -19,7 +19,7 @@ on:
         description: "Extensions to build (comma separated)"
         required: true
         type: string
-        default: "bcmath,bz2,ctype,curl,dom,ev,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,openssl,pdo,pdo_sqlite,phar,session,shmop,simplexml,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib,gd"
+        default: "bcmath,bz2,ctype,openssl,curl,dom,ev,ffi,fileinfo,filter,iconv,libxml,mbregex,mbstring,opcache,pdo,pdo_sqlite,phar,session,shmop,simplexml,sockets,sodium,sqlite3,tokenizer,xml,xmlreader,xmlwriter,zip,zlib,gd"
 
       libs:
         description: "Libraries to build (comma separated)"
