@@ -74,7 +74,7 @@ jobs:
         run: .\spc.exe doctor --auto-fix
 
       - name: "Run the \"download\" command"
-        run: .\spc.exe download --with-php="${{ inputs.version }}" --for-extensions="${{ inputs.extensions }}" --for-libs="${{ inputs.libs }}" --without-lib="libssh2" ${{ env.SPC_BUILD_DEBUG }} --prefer-pre-built
+        run: .\spc.exe download --with-php="${{ inputs.version }}" --for-extensions="${{ inputs.extensions }}" --for-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_DEBUG }} --prefer-pre-built
 
       - name: "Run the \"build\" command"
         run: .\spc.exe build "${{ inputs.extensions }}" --with-libs="${{ inputs.libs }}" ${{ env.SPC_BUILD_CLI }} ${{ env.SPC_BUILD_MICRO }} ${{ env.SPC_BUILD_DEBUG }}
