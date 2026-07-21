@@ -7,9 +7,9 @@ on:
         description: "PHP version to build"
         required: true
         type: choice
-        default: "8.5.7"
+        default: "8.5.5"
         options:
-          - "8.5.7"
+          - "8.5.5"
           - "8.4.20"
           - "8.3.30"
           - "8.2.30"
